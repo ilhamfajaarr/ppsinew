@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Transaksi</title>
+  <link rel="stylesheet" href="css/reports.css">
+</head>
+<body>
+
+<header>
+  <h2>Laporan Transaksi</h2>
+  <button class="btn-logout" onclick="logout()">Logout</button>
+</header>
+
+<form id="filterForm">
+  <div style="display:flex; gap:10px; flex-wrap:wrap">
+
+    <div>
+      <label>Dari Tanggal</label><br>
+      <input type="date" name="from">
+    </div>
+
+    <div>
+      <label>Sampai Tanggal</label><br>
+      <input type="date" name="to">
+    </div>
+
+    <div>
+      <label>Produk</label><br>
+      <input type="text" name="product" placeholder="Nama produk">
+    </div>
+
+    <div>
+      <label>ID Transaksi</label><br>
+      <input type="number" name="tid">
+    </div>
+
+  </div>
+
+  <button type="submit">Filter</button>
+  <button type="button" onclick="resetFilter()">Reset</button>
+  <button type="button" class="btn-export" onclick="exportToExcel()">Export to Excel</button>
+</form>
+
+<br>
+
+<table border="1" width="100%" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Tanggal</th>
+      <th>ID Transaksi</th>
+      <th>Produk</th>
+      <th>Qty</th>
+      <th>Harga</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody id="reportBody"></tbody>
+</table>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/reports.js"></script>
+</body>
+</html>

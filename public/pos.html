@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>POS Pawon</title>
+  <link rel="stylesheet" href="css/pos.css">
+</head>
+<body>
+
+<header>
+  <h2>Pawon Jnana - POS</h2>
+  <button class="btn-logout" onclick="logout()">Logout</button>
+</header>
+
+
+<main class="pos-container">
+
+  <!-- KERANJANG -->
+  <section class="cart-section">
+    <h3>Keranjang</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="cartBody"></tbody>
+    </table>
+
+    <div class="summary">
+      <p>Subtotal: Rp <span id="subtotal">0</span></p>
+      <p>PPN 10%: Rp <span id="tax">0</span></p>
+      <h3>Total Bayar: Rp <span id="total">0</span></h3>
+    </div>
+
+    <div class="checkout">
+      <button class="btn-cash" onclick="openPayment('TUNAI')">Bayar Tunai</button>
+      <button class="btn-qris" onclick="openPayment('QRIS')">Non Tunai (QRIS)</button>
+    </div>    
+  </section>
+
+
+  <!-- MENU -->
+  <section class="menu-section">
+
+    <div class="category-filter">
+      <button onclick="setCategory('all')">Semua</button>
+      <button onclick="setCategory('makanan')">Makanan</button>
+      <button onclick="setCategory('minuman')">Minuman</button>
+    </div>
+
+    <div id="menuList" class="menu-grid"></div>
+  </section>
+
+</main>
+
+
+
+
+<!-- MODAL BAYAR -->
+<div id="paymentModal" class="modal hidden">
+  <div class="modal-content">
+    <h3 id="paymentTitle"></h3>
+
+    <div id="qrisBox" class="hidden">
+      <img src="https://via.placeholder.com/250x250?text=QRIS" />
+    </div>
+
+    <button class="btn btn-primary" onclick="checkout()">Konfirmasi Bayar</button>
+    <button class="btn btn-danger" onclick="closeModal()">Batal</button>
+  </div>
+</div>
+
+
+<script src="js/pos.js"></script>
+
+<!-- Popup Notification -->
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="popup-close" onclick="closePopup()">&times;</span>
+    <p id="popup-message"></p>
+  </div>
+</div>
+
+<!-- Struk Print -->
+<div id="struk" class="struk">
+  <div class="struk-content">
+    <h2>Pawon Jnana</h2>
+    <p>Struk Pembayaran</p>
+    <p>ID Transaksi: <span id="struk-id"></span></p>
+    <p>Tanggal: <span id="struk-date"></span></p>
+    <table id="struk-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Harga</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="struk-body"></tbody>
+    </table>
+    <p>Subtotal: Rp <span id="struk-subtotal"></span></p>
+    <p>PPN 10%: Rp <span id="struk-ppn"></span></p>
+    <p><strong>Total Bayar: Rp <span id="struk-total"></span></strong></p>
+    <p>Terima Kasih!</p>
+  </div>
+</div>
+
+</body>
+</html>

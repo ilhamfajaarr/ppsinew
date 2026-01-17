@@ -1,0 +1,163 @@
+/* RESET SEDERHANA */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+  padding: 30px;
+  color: #333;
+}
+
+header {
+  background: rgb(42, 53, 214);
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* logout button */
+.btn-logout{
+  position:absolute;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+  border:none;
+  color:white;
+  padding:10px 20px;
+  border-radius:25px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  transition:all 0.3s ease;
+  box-shadow:0 4px 15px rgba(255, 71, 87, 0.3);
+}
+
+.btn-logout:hover{
+  background: linear-gradient(135deg, #ff3838 0%, #ff2828 100%);
+  transform:translateY(-50%) translateY(-2px);
+  box-shadow:0 6px 20px rgba(255, 71, 87, 0.4);
+}
+
+.btn-logout:active{
+  transform:translateY(-50%) translateY(0);
+  box-shadow:0 2px 10px rgba(255, 71, 87, 0.3);
+}
+
+/* JUDUL */
+h2 {
+  margin-bottom: 0;
+  color: white;
+  font-size: 24px;
+}
+
+/* FORM FILTER */
+form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  margin-bottom: 25px;
+}
+
+form label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+form input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  margin-top: 15px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+form button[type="submit"] {
+  background: #007bff;
+  color: #fff;
+}
+
+form button[type="button"] {
+  background: #6c757d;
+  color: #fff;
+}
+
+.btn-export {
+  background: #28a745 !important;
+  color: #fff !important;
+}
+
+.btn-export:hover {
+  background: #218838 !important;
+}
+
+/* TABEL */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background: #007bff;
+  color: #fff;
+}
+
+thead th {
+  padding: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+tbody tr:hover {
+  background: #eef5ff;
+}
+
+/* ALIGNMENT */
+td:nth-child(1),
+td:nth-child(3) {
+  text-align: left;
+}
+
+td:nth-child(2),
+td:nth-child(4),
+td:nth-child(5),
+td:nth-child(6) {
+  text-align: center;
+}
+
+/* TOTAL HARGA */
+td:last-child {
+  font-weight: bold;
+  color: #27ae60;
+}
