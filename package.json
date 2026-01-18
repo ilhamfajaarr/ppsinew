@@ -1,0 +1,25 @@
+ {
+  "name": "ppsi-app",
+  "version": "1.0.0",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilhamfajaarr/ppsinew.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilhamfajaarr/ppsinew/issues"
+  },
+  "homepage": "https://github.com/ilhamfajaarr/ppsinew#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mssql": "^12.2.0"
+  }
+}

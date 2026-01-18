@@ -1,22 +1,20 @@
 const express = require("express");
 const cors = require("cors");
-const db = require("./db"); 
-const {login} = require("./auth");
+const path = require("path");
+require("dotenv").config();
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
-});
-
+const db = require("./db");
 
 const app = express();
+
+/* ================= MIDDLEWARE ================= */
 app.use(cors());
 app.use(express.json());
 
-const path = require("path");
+/* ================= STATIC FRONTEND ================= */
 app.use(express.static(path.join(__dirname, "..", "public")));
 
+/* ================= ROUTES ================= */
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -41,24 +39,21 @@ app.post("/login", async (req, res) => {
     }
 
   } catch (err) {
-    console.error(err);
+    console.error("LOGIN ERROR:", err);
     res.status(500).json({ success: false });
   }
 });
 
-
-
-app.get("/menu", async (req,res)=>{
-  try{
-    const result = await db.query(`
+app.get("/menu", async (req, res) => {
+  try {
+    const result = await db.pool.request().query(`
       SELECT id_menu, nama_menu, harga, kategori
       FROM dbo.Menu
     `);
 
     res.json(result.recordset);
-
-  }catch(err){
-    console.log("error /menu", err);
+  } catch (err) {
+    console.error("MENU ERROR:", err);
     res.status(500).send("Server error");
   }
 });
@@ -71,7 +66,6 @@ app.post("/checkout", async (req, res) => {
   }
 
   const transaction = db.pool.transaction();
-
   const totalBayar = items.reduce(
     (sum, i) => sum + i.qty * i.harga,
     0
@@ -80,7 +74,6 @@ app.post("/checkout", async (req, res) => {
   try {
     await transaction.begin();
 
-    // 1. PEMBAYARAN
     const pembayaran = await transaction.request().query(`
       INSERT INTO Pembayaran (metode_pembayaran, total_bayar)
       VALUES ('${metode_pembayaran}', ${totalBayar});
@@ -90,7 +83,6 @@ app.post("/checkout", async (req, res) => {
 
     const id_transaksi = pembayaran.recordset[0].id_transaksi;
 
-    // 2. DETAIL PESANAN
     for (const item of items) {
       await transaction.request().query(`
         INSERT INTO Pesanan
@@ -106,7 +98,6 @@ app.post("/checkout", async (req, res) => {
     }
 
     await transaction.commit();
-
     res.json({ success: true, id_transaksi });
 
   } catch (err) {
@@ -116,13 +107,11 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
-
 app.get("/reports", async (req, res) => {
   const { from, to, product, tid } = req.query;
 
   try {
     let where = "WHERE 1=1";
-
     if (from) where += ` AND CAST(py.tanggal AS DATE) >= '${from}'`;
     if (to) where += ` AND CAST(py.tanggal AS DATE) <= '${to}'`;
     if (product) where += ` AND m.nama_menu LIKE '%${product}%'`;
@@ -144,12 +133,14 @@ app.get("/reports", async (req, res) => {
     `);
 
     res.json(result.recordset);
-
   } catch (err) {
     console.error("REPORT ERROR:", err);
     res.status(500).json([]);
   }
 });
 
-
-app.listen(3000, ()=> console.log("server running"));
+/* ================= START SERVER ================= */
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
+});
