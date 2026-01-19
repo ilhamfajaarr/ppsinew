@@ -1,32 +1,14 @@
-const sql = require("mssql");
+const { Pool } = require("pg");
 
-
-
-const config = {
-  server: "localhost",
-  database: "rmpawonjnana",
-  user: "sa",
-  password: "12345678",
-  options: {
-    encrypt: false,
-    trustServerCertificate: true,
-  },
-};
-
-const pool = new sql.ConnectionPool(config);
-const poolConnect = pool.connect();
-
-poolConnect.then(() => {
-  console.log("DB Connected!");
-}).catch(err => {
-  console.log("DB Error: ", err);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-module.exports = {
-  sql,
-  pool,
-  query: async (queryString) => {
-    await poolConnect;
-    return pool.request().query(queryString);
-  }
-};
+pool.connect()
+  .then(() => console.log("Connected to PostgreSQL"))
+  .catch(err => console.error("DB Error:", err));
+
+module.exports = pool;

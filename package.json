@@ -1,4 +1,4 @@
- {
+{
   "name": "ppsi-app",
   "version": "1.0.0",
   "main": "server/index.js",
@@ -20,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "mssql": "^12.2.0"
+    "mssql": "^12.2.0",
+    "pg": "^8.17.1"
   }
 }
