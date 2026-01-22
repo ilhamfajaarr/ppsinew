@@ -158,7 +158,7 @@ app.get("/reports", async (req, res) => {
 /* ================= START SERVER ================= */
 const PORT = process.env.PORT || 8080;
 app.get("/", (req, res) => {
-  res.send("/login.html");
+  res.redirect("/login.html");
 });
 
 app.listen(PORT, () => {
