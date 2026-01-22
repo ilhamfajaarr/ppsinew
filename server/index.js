@@ -56,23 +56,23 @@ app.get("/menu", async (req, res) => {
 });
 
 // CHECKOUT
+// CHECKOUT
 app.post("/checkout", async (req, res) => {
   const { metode_pembayaran, items } = req.body;
   if (!items || items.length === 0) {
     return res.status(400).json({ success: false });
   }
 
-  const client = await db.pool.connect();
-
-  const totalBayar = items.reduce(
-    (sum, i) => sum + i.qty * i.harga,
-    0
-  );
+  const client = await db.connect();
 
   try {
     await client.query("BEGIN");
 
-    // PEMBAYARAN
+    const totalBayar = items.reduce(
+      (sum, i) => sum + i.qty * i.harga,
+      0
+    );
+
     const pembayaran = await client.query(
       `INSERT INTO pembayaran (metode_pembayaran, total_bayar)
        VALUES ($1, $2)
@@ -82,18 +82,12 @@ app.post("/checkout", async (req, res) => {
 
     const id_transaksi = pembayaran.rows[0].id_transaksi;
 
-    // PESANAN
     for (const item of items) {
       await client.query(
         `INSERT INTO pesanan
          (id_transaksi, id_menu, qty, total_harga, status)
          VALUES ($1, $2, $3, $4, 'selesai')`,
-        [
-          id_transaksi,
-          item.id_menu,
-          item.qty,
-          item.qty * item.harga
-        ]
+        [id_transaksi, item.id_menu, item.qty, item.qty * item.harga]
       );
     }
 
@@ -108,6 +102,7 @@ app.post("/checkout", async (req, res) => {
     client.release();
   }
 });
+
 
 // REPORTS
 app.get("/reports", async (req, res) => {
@@ -162,6 +157,10 @@ app.get("/reports", async (req, res) => {
 
 /* ================= START SERVER ================= */
 const PORT = process.env.PORT || 8080;
+app.get("/", (req, res) => {
+  res.send("/login.html");
+});
+
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
